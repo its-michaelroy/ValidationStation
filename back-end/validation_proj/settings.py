@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 from dotenv import dotenv_values
 
 env = dotenv_values(".env")
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'user_app',
     'phone_validation_app',
     'email_validation_app',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -55,6 +57,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

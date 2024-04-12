@@ -21,17 +21,24 @@ import json
 # Create your views here.
 class PhoneValidation(TokenReq):
     def post(self, request):
-        print('YO DAWG!!!!!!!',request.body)
+        print('UNFORMAT REQUEST.BODY!!!!!!!',request.body)
         body = json.loads(request.body)
-        print('YO WHATS WITH THE MONEY!!!!!!!',body)
+        print('AFTER THE JSON.LOADS (JUST BODY)!!!!!!!',body)
+        # Grab the phone number from the request body below
         number = body['phone_number']
-        print('YO WHATS WITH THE NUMBER!!!!!!!',number)
+        countryCode = body['countryCode']
+        #NOPE > internationalFormat = body['internationalFormat']
+        print('YO ACCESS NUMBER VALUE FROM PHONE_NUM KEY!!!!!!!',number, countryCode)
         API_KEY = env.get('API_KEY')
+        #make sure the number is in the correct format
         adjusted_number = number[0] + number[1] + number[2]+"+" + number[3] + number[4] + number[5]+ "-" + number[6] + number[7] + number[8] + number[9]
-        endpoint = f"https://api-bdc.net/data/phone-number-validate?number={adjusted_number}&countryCode=us&localityLanguage=en&key={API_KEY}"
+        #make the request to the API
+        endpoint = f"https://api-bdc.net/data/phone-number-validate?number={adjusted_number}&countryCode={countryCode}&localityLanguage=en&key={API_KEY}"
         response = requests.get(endpoint)
-        print(response)
+        print('LOOK A POTATO CANDY RECIPE', response)
         data = request.data.copy()
+        print('DATA IS HERE >>>', data)
+        print('RESPONSE IS HERE >>>', response)
             # data['user'] = request.user.id
         # new_phone = Phone(**data)
         # try:
