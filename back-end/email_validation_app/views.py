@@ -60,3 +60,15 @@ class EmailValidation(TokenReq):
                 return Response({'error':'Email validation failed!'}, status=HTTP_400_BAD_REQUEST)
         except ValidationError as e:
             return Response(e.message_dict, status=HTTP_400_BAD_REQUEST)
+
+#Retrieve a single email object by its id or email
+class A_email_record(TokenReq):
+    def get(self, request, email_id):
+        try:
+            email = get_object_or_404(Email, id=email_id)
+            serializer = EmailSerializer(email)
+            return Response(serializer.data, status=HTTP_200_OK)
+        except:
+            email = get_object_or_404(Email, email_address=email_id)
+            serializer = EmailSerializer(email)
+            return Response(serializer.data, status=HTTP_200_OK)
