@@ -72,3 +72,51 @@ class A_email_record(TokenReq):
 
         serializer = EmailSerializer(email)
         return Response(serializer.data, status=HTTP_200_OK)
+
+    #Delete a single email object by its id or email
+    def delete(self, request, identifier):
+        if identifier.isdigit():
+            email = get_object_or_404(Email, id=identifier)
+        else:
+            email = get_object_or_404(Email, email_address=identifier)
+        email.delete()
+        return Response({'message':'Email record deleted!'}, status=HTTP_204_NO_CONTENT)
+
+    #Update a single email object by its id or email
+    def put(self, request, identifier):
+        if identifier.isdigit():
+            email = get_object_or_404(Email, id=identifier)
+        else:
+            email = get_object_or_404(Email, email_address=identifier)
+
+        body = json.loads(request.body)
+        email.email_address = body.get('email_address', email.email_address)
+        email.is_valid = body.get('is_valid', email.is_valid)
+        email.isSyntaxValid = body.get('isSyntaxValid', email.isSyntaxValid)
+        email.isMailServerDefined = body.get('isMailServerDefined', email.isMailServerDefined)
+        email.isKnownSpammerDomain = body.get('isKnownSpammerDomain', email.isKnownSpammerDomain)
+        email.isDisposable = body.get('isDisposable', email.isDisposable)
+        email.full_clean()
+        email.save()
+        return Response({'message':'Email record updated!'}, status=HTTP_200_OK)
+
+#Retrieve all email objects
+class All_email_records(TokenReq):
+    def get(self, request):
+        emails = Email.objects.all()
+        serializer = EmailSerializer(emails, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
+
+#Retrieve all email objects that are in the whitelist
+class Whitelist_email_records(TokenReq):
+    def get(self, request):
+        emails = Email.objects.filter(is_valid=True)
+        serializer = EmailSerializer(emails, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
+
+#Retrieve all email objects that are in the blacklist
+class Blacklist_email_records(TokenReq):
+    def get(self, request):
+        emails = Email.objects.filter(is_valid=False)
+        serializer = EmailSerializer(emails, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
