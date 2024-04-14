@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user_app',
     'phone_validation_app',
     'email_validation_app',
+    'icon_app',
     'corsheaders',
 ]
 

@@ -38,7 +38,7 @@ class PhoneValidation(TokenReq):
             #Construct request to the API
             endpoint = f"https://api-bdc.net/data/phone-number-validate?number={number}&countryCode={countryCode}&key={API_KEY}"
             response = requests.get(endpoint)
-            print('LOOK A POTATO CANDY RECIPE', response)
+            print('LOOK >>', response)
             data_copy = request.data.copy() #copy of data from above
             print('DATA IS HERE >>>', data_copy)
             print('RESPONSE IS HERE >>>', response) # just 200

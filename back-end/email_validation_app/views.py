@@ -26,6 +26,7 @@ class EmailValidation(TokenReq):
     def post(self, request):
         try:
             body = json.loads(request.body)
+            # Grab the email from the request body below
             email = body['email_address']
             print(email)
             API_KEY = env.get('API_KEY')
@@ -38,6 +39,7 @@ class EmailValidation(TokenReq):
             if response.status_code == 200:
                 data = response.json()
                 print("YO DATA HERE >>> ", data)
+
                 #check if email exists in the database
                 if Email.objects.filter(email_address=data.get('inputData')).exists():
                     return Response({'error':'Email already exists!'}, status=HTTP_400_BAD_REQUEST)

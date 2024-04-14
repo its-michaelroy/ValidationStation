@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/v1/users/', include('user_app.urls')),
     path('api/v1/phone/', include('phone_validation_app.urls')),
     path('api/v1/email/', include('email_validation_app.urls')),
+    path('api/v1/icons/', include('icon_app.urls')),
 
 ]
