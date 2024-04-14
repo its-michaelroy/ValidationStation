@@ -30,13 +30,13 @@ class PhoneValidation(TokenReq):
             # Grab the phone number from the request body below
             number = body['phone_number']
             countryCode = body['countryCode']
-            print('ACCESS NUMBER VALUE FROM PHONE_NUM KEY!!!!!!!',number, countryCode)
+            print(number, countryCode)
             API_KEY = env.get('API_KEY')
             #make sure the number is in the correct format
-            adjusted_number = number[0] + number[1] + number[2]+"+" + number[3] + number[4] + number[5]+ "-" + number[6] + number[7] + number[8] + number[9]
+            # adjusted_number = number[0] + number[1] + number[2]+"+" + number[3] + number[4] + number[5]+ "-" + number[6] + number[7] + number[8] + number[9]
 
             #Construct request to the API
-            endpoint = f"https://api-bdc.net/data/phone-number-validate?number={adjusted_number}&countryCode={countryCode}&key={API_KEY}"
+            endpoint = f"https://api-bdc.net/data/phone-number-validate?number={number}&countryCode={countryCode}&key={API_KEY}"
             response = requests.get(endpoint)
             print('LOOK A POTATO CANDY RECIPE', response)
             data_copy = request.data.copy() #copy of data from above
@@ -44,21 +44,29 @@ class PhoneValidation(TokenReq):
             print('RESPONSE IS HERE >>>', response) # just 200
             if response.status_code == 200:
                 data = response.json()
+                callingCode = data.get('country', {}).get('callingCode')
+                print('CALLING CODE IS HERE >>>', callingCode)
+                non_e164Format = "+" + callingCode + number
                 print('DATA IS HERE >>>', data)
 
                 #check if phone number exists in the database
-                if Phone.objects.filter(phone_number=data.get('e164Format')).exists():
+                if Phone.objects.filter(phone_number=data.get('e164Format')).exists() or Phone.objects.filter(phone_number=non_e164Format).exists():
                     return Response({'error':'Phone number already exists!'}, status=HTTP_400_BAD_REQUEST)
+
+                if data.get('e164Format') in data:
+                    phone_number = data.get('e164Format')
+                else:
+                    phone_number = non_e164Format
 
                 #create & save the phone object
                 new_phone = Phone(
-                    phone_number=data.get('e164Format'),
+                    phone_number=phone_number,
                     countryCode=countryCode,
                     localityLanguage=data.get('localityLanguage', 'en'),
                     is_valid=data.get('isValid', False),
-                    location=data.get('location', ''),
+                    location=data.get('location', 'This needs fixed!'),
                     lineType=data.get('lineType', 'unknown'),
-                    currency_name=data['country']['currency'].get('name', 'USD'),
+                    currency_name=data['country']['currency'].get('name', ''),
                     countryFlagEmoji=data['country'].get('countryFlagEmoji', ''),
                     country_name=data['country'].get('name', '')
                 )

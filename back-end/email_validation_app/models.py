@@ -16,10 +16,10 @@ class Email(models.Model):
     isKnownSpammerDomain = models.BooleanField(default=False)
     isDisposable = models.BooleanField(default=False)
 
-    # Or OneToMany relationship with User
-    user = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='emails'
-    )
+    # # Or OneToMany relationship with User
+    # user = models.ForeignKey(
+    #     User,
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    #     related_name='emails'
+    # )

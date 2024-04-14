@@ -7,7 +7,7 @@ class Phone(models.Model):
         max_length=16,
         null=False,
         blank=False,
-        validators=[v.RegexValidator(r'^\+?[1-9]\d{1,14}$')]
+        validators=[v.RegexValidator(r'^\+(?:[0-9] ?){6,14}[0-9]$')]
         )
     # US, CA, etc.
     countryCode = models.CharField(max_length=3, null=False, blank=False)
@@ -16,7 +16,7 @@ class Phone(models.Model):
     location = models.CharField(max_length=50)
     lineType = models.CharField(max_length=20, default='unknown')
     currency_name = models.CharField(max_length=20, default='USD')
-    countryFlagEmoji = models.CharField()
+    countryFlagEmoji = models.CharField(max_length=10, default='🇺🇸')
     country_name = models.CharField(max_length=30)
 
     def __str__(self):
