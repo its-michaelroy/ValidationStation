@@ -100,7 +100,7 @@ class A_email_record(TokenReq):
         email.save()
         return Response({'message':'Email record updated!'}, status=HTTP_200_OK)
 
-#Retrieve all email objects
+#Retrieve all email objects!
 class All_email_records(TokenReq):
     def get(self, request):
         emails = Email.objects.all()
