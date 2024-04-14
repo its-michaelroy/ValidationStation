@@ -19,7 +19,7 @@ from validation_proj.settings import env
 import json
 from django.core.exceptions import ValidationError
 from .serializers import EmailSerializer
-import re
+from django.db.models import Q
 
 # Create your views here.
 #Validates & creates a new email object
@@ -110,13 +110,21 @@ class All_email_records(TokenReq):
 #Retrieve all email objects that are in the whitelist
 class Whitelist_email_records(TokenReq):
     def get(self, request):
-        emails = Email.objects.filter(is_valid=True)
+        emails = Email.objects.filter(
+            Q(is_valid=True) &
+            Q(isMailServerDefined=True) &
+            Q(isKnownSpammerDomain=False)
+        )
         serializer = EmailSerializer(emails, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
 #Retrieve all email objects that are in the blacklist
 class Blacklist_email_records(TokenReq):
     def get(self, request):
-        emails = Email.objects.filter(is_valid=False)
+        emails = Email.objects.filter(
+            Q(is_valid=False) |
+            Q(isMailServerDefined=False) |
+            Q(isKnownSpammerDomain=True)
+        )
         serializer = EmailSerializer(emails, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
