@@ -19,6 +19,7 @@ from validation_proj.settings import env
 import json
 from django.core.exceptions import ValidationError
 from .serializers import EmailSerializer
+import re
 
 # Create your views here.
 #Validates & creates a new email object
@@ -63,12 +64,11 @@ class EmailValidation(TokenReq):
 
 #Retrieve a single email object by its id or email
 class A_email_record(TokenReq):
-    def get(self, request, email_id):
-        try:
-            email = get_object_or_404(Email, id=email_id)
-            serializer = EmailSerializer(email)
-            return Response(serializer.data, status=HTTP_200_OK)
-        except:
-            email = get_object_or_404(Email, email_address=email_id)
-            serializer = EmailSerializer(email)
-            return Response(serializer.data, status=HTTP_200_OK)
+    def get(self, request, identifier):
+        if identifier.isdigit():
+            email = get_object_or_404(Email, id=identifier)
+        else:
+            email = get_object_or_404(Email, email_address=identifier)
+
+        serializer = EmailSerializer(email)
+        return Response(serializer.data, status=HTTP_200_OK)
