@@ -2,9 +2,13 @@ from django.db import models
 from django.core import validators as v
 
 # Create your models here.
-
 class Phone(models.Model):
-    phone_number = models.CharField(max_length=15, null=False, blank=False, validators=[v.RegexValidator(r'^\+?[1-9]\d{1,14}$')])
+    phone_number = models.CharField(
+        max_length=16,
+        null=False,
+        blank=False,
+        validators=[v.RegexValidator(r'^\+?[1-9]\d{1,14}$')]
+        )
     # US, CA, etc.
     countryCode = models.CharField(max_length=3, null=False, blank=False)
     localityLanguage = models.CharField(max_length=20, default='en')
@@ -14,3 +18,6 @@ class Phone(models.Model):
     currency_name = models.CharField(max_length=20, default='USD')
     countryFlagEmoji = models.CharField()
     country_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f'{self.phone_number} ({self.country_name})'
