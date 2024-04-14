@@ -66,6 +66,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+#Only for when dep to production
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com", # domain
+#     "https://sub.example.com", #subdomain
+#     "http://localhost:5173", #dev server
+# ]
+
+# Only do this during dev
+CORS_ALLOW_ALL_ORIGINS = True
+
 ROOT_URLCONF = 'validation_proj.urls'
 
 TEMPLATES = [

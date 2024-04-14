@@ -25,14 +25,15 @@ class TokenReq(APIView):
 class Info(TokenReq):
     def get(self, request):
         try:
-            return Response({'email': request.user.email}, status=HTTP_200_OK)
+            a_user = request.user
+            return Response({'user': a_user.email}, status=HTTP_200_OK)
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
 class Register(APIView):
     def post(self, request):
-        request.data["username"] = request.data["email"]
         data = request.data.copy()
+        data["username"] = request.data.get('username', request.data.get('email'))
         new_user = User(**data)
         try:
             new_user.full_clean()
@@ -57,10 +58,9 @@ class Log_in(APIView):
         return Response('Invalid user', status=HTTP_400_BAD_REQUEST)
 
 class Log_out(TokenReq):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
     def post(self, request):
         try:
+            request.user.auth_token.delete()
             logout(request)
             return Response('User logged out', status=HTTP_204_NO_CONTENT)
         except ValidationError as e:
