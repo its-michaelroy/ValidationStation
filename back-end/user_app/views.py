@@ -15,6 +15,7 @@ from rest_framework.authtoken.models import Token
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from .models import User
+from rest_framework.exceptions import NotFound, PermissionDenied
 
 
 # Create your views here.
@@ -48,12 +49,30 @@ class Info(TokenReq):
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
+        email_to_delete = request.data.get('email')
+        if not request.user.is_superuser:
+            raise PermissionDenied("You do not have permission to perform this action.")
+
+        if not email_to_delete:
+            return Response({"error": "Email address is required."}, status=HTTP_400_BAD_REQUEST)
+
         try:
-            a_user = request.user
-            a_user.delete()
-            return Response('User deleted', status=HTTP_204_NO_CONTENT)
+            user_to_delete = User.objects.get(email=email_to_delete)
+            user_to_delete.delete()
+            return Response('User deleted successfully.', status=HTTP_204_NO_CONTENT)
+        except User.DoesNotExist:
+            raise NotFound('User with the provided email does not exist.')
         except ValidationError as e:
-            return Response(e, status=HTTP_400_BAD_REQUEST)
+            return Response(e.message_dict, status=HTTP_400_BAD_REQUEST)
+        except Exception as ex:
+            print(f"Unexpected error: {ex}")
+            return Response({'error': 'An unexpected error occurred while deleting the user.'})
+        # try:
+        #     a_user = request.user
+        #     a_user.delete()
+        #     return Response('User deleted', status=HTTP_204_NO_CONTENT)
+        # except ValidationError as e:
+        #     return Response(e, status=HTTP_400_BAD_REQUEST)
 
 class Register(APIView):
     def post(self, request):
@@ -90,3 +109,31 @@ class Log_out(TokenReq):
             return Response('User logged out', status=HTTP_204_NO_CONTENT)
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
+
+class MASTER_USER(APIView):
+    def post(self, request):
+        # if not request.user.is_authenticated or not request.user.is_superuser:
+        #     return Response({'error': 'Unauthorized user'}, status=HTTP_401_UNAUTHORIZED)
+
+        data = request.data.copy()
+        data["username"] = data.get('username', data.get('email'))
+
+        try:
+            new_user = User(**data)
+            new_user.is_superuser = True
+            new_user.is_staff = True  # Optionally set if you want them to access the admin site
+            new_user.set_password(data['password'])
+            new_user.full_clean()
+            new_user.save()
+
+            token = Token.objects.create(user=new_user)
+
+            return Response({
+                'user': new_user.username,
+                'token': token.key,
+                'is_superuser': new_user.is_superuser,
+                'is_staff': new_user.is_staff
+            }, status=HTTP_201_CREATED)
+
+        except ValidationError as e:
+            return Response(e.message_dict, status=HTTP_400_BAD_REQUEST)
