@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/esm/Button';
 import { userLogout } from '../utilities';
 
-// if user exists we are logged in
+// if user exists we are logged in nio
 function NavBar({ user, setUser }) {
 
   const handleUserLogout = async () => {
