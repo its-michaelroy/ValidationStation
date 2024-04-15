@@ -30,6 +30,31 @@ class Info(TokenReq):
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
+    def put(self, request):
+        try:
+            a_user = request.user
+            data = request.data.copy()
+            a_user.email = data.get('email', a_user.email)
+            current_password = data.get('password')
+            if current_password and data.get('new_password'):
+                if a_user.check_password(current_password):
+                    a_user.set_password(data.get('new_password'))
+                else:
+                    return Response('Invalid password', status=HTTP_400_BAD_REQUEST)
+            a_user.full_clean()
+            a_user.save()
+            return Response({'user': a_user.email}, status=HTTP_200_OK)
+        except ValidationError as e:
+            return Response(e, status=HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        try:
+            a_user = request.user
+            a_user.delete()
+            return Response('User deleted', status=HTTP_204_NO_CONTENT)
+        except ValidationError as e:
+            return Response(e, status=HTTP_400_BAD_REQUEST)
+
 class Register(APIView):
     def post(self, request):
         data = request.data.copy()
