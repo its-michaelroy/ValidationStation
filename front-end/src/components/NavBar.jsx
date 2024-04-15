@@ -9,6 +9,7 @@ import { userLogout } from '../utilities';
 // if user exists we are logged in nio
 function NavBar({ user, setUser }) {
 
+
   const handleUserLogout = async () => {
     const loggedOut = await userLogout()
     if(loggedOut)  {
