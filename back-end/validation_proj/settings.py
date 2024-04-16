@@ -40,13 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'user_app',
     'phone_validation_app',
     'email_validation_app',
     'icon_app',
-    'corsheaders',
+
 ]
 
 REST_FRAMEWORK = {

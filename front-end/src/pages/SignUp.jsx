@@ -12,7 +12,7 @@ const SignUp = () => {
   // TODO: Refactor into utilities.js
   const signupUser = async(e) => {
     e.preventDefault();
-    const response = await api.post("users/signup/", { email: emailInput, password: passwordInput})
+    const response = await api.post("users/register/", { email: emailInput, password: passwordInput})
     if (response.status === 201) {
         console.log('successfuly signed up, user info', response.data);
         const { token, user } = response.data;
@@ -42,7 +42,7 @@ const SignUp = () => {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control 
+          <Form.Control
             onChange={(e) => setPasswordInput(e.target.value)}
           type="password" placeholder="Password" />
         </Form.Group>

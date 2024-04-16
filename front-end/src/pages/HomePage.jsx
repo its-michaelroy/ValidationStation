@@ -1,3 +1,6 @@
+import '../index.css';
+
+
 const HomePage = () => {
 
     return(

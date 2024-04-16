@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import reactLogo from './assets/wizard.ico'
+// import viteLogo from '/vite.svg'
+import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar'
-import { Outlet, useLoaderData, useNavigate, useLocation } from 'react-router-dom'
+import './index.css'
+import MainPage from './pages/MainPage'
 import { api } from './utilities'
 
 function App() {
@@ -11,17 +13,17 @@ function App() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const testConnection = async() => {
-    const response = await api.get("test/")
-    console.log(response)
-  }
+  // const testConnection = async() => {
+  //   const response = await api.get("test/")
+  //   console.log(response)
+  // }
+
+  // useEffect(() => {
+  //   testConnection()
+  // }, [])
 
   useEffect(() => {
-    testConnection()
-  }, [])
-
-  useEffect(() => {
-    let nullUserUrls = ["/login/", "/signup/"] // should redirect to homepage if logged in
+    let nullUserUrls = ["/login/", "/register/"] // should redirect to homepage if logged in
 
     // check if current url is one that might need to redirect
     let isAllowed = nullUserUrls.includes(location.pathname)

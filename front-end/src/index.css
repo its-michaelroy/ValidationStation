@@ -1,8 +1,21 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+
+#mainbody {
 
 
+  background-color: rgb(255, 253, 253);
+  /* --text-primary: black;
+  --text-secondary: royalblue;
+  --accent: purple; */
+}
+/* [data-theme="dark"] {
+  --background: rgb(29, 30, 40, 1);
+  --text-primary: white;
+  --text-secondary: grey;
+  --accent: darkred;
+} */
 
 
 
