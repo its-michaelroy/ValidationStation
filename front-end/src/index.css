@@ -2,23 +2,40 @@
 @tailwind components;
 @tailwind utilities; */
 
-#mainbody {
+/* #mainbody {
 
 
   background-color: rgb(255, 253, 253);
   /* --text-primary: black;
   --text-secondary: royalblue;
   --accent: purple; */
+/* } */
+
+.placeholder-red,
+div.alert-red {
+  color: white;
+  background-color: #dc3545; /* Bootstrap danger color */
 }
-/* [data-theme="dark"] {
-  --background: rgb(29, 30, 40, 1);
-  --text-primary: white;
-  --text-secondary: grey;
-  --accent: darkred;
-} */
 
+.placeholder-green,
+div.alert-green {
+  color: white;
+  background-color: #28a745; /* Bootstrap success color */
+}
 
+input#formBasicEmail.input-valid.form-control,
+input#formBasicPhone.input-valid.form-control {
+  border: 2px solid #28a745; /* Green border for valid emails */
+  background-color: #e9f8f3; /* Light green background for valid emails */
+  color: black; /* Text color */
+}
 
+input#formBasicEmail.input-invalid.form-control,
+input#formBasicPhone.input-invalid.form-control {
+  border: 2px solid #dc3545; /* Red border for invalid or spam emails */
+  background-color: #fbe3e4; /* Light red background for invalid or spam emails */
+  color: black; /* Text color */
+}
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
