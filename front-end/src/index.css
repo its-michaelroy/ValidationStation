@@ -1,14 +1,14 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 /* Custom CSS */
 
 :root {
-  --primary-color: #fdfdfd; /* Off-white */
+  --primary-color: #41e6e6; /* Off-white */
   --secondary-color: #333333; /* Charcoal */
   --accent-color: #a3bffa; /* Soft Blue */
-  --background-color: #fdfdfd; /* Off-white */
+  --background-color: #41e6e6; /* Off-white fdfdfd*/
   --text-color: #333333; /* Charcoal */
 }
 
