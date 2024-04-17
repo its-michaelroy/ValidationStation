@@ -35,11 +35,17 @@ function NavBar({ user, setUser }) {
             <Nav.Link as={Link} to="/main/">
               Main
             </Nav.Link>
-            <Nav.Link as={Link} to="/history/">
-              History
+            <Nav.Link as={Link} to="/emailhistory/">
+              EmailHistory
             </Nav.Link>
             <Nav.Link as={Link} to="/phonehistory/">
               PhoneHistory
+            </Nav.Link>
+            <Nav.Link as={Link} to="/blacklist/">
+              Blacklist
+            </Nav.Link>
+            <Nav.Link as={Link} to="/whitelist/">
+              Whitelist
             </Nav.Link>
             {!user ? null : (
               <Button

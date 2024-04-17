@@ -3,7 +3,7 @@ import { Button, Form, Modal, Table } from "react-bootstrap";
 import "../index.css";
 import { api } from "../utilities";
 
-const History = () => {
+const EmailHistory = () => {
   const [emails, setEmails] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentEmail, setCurrentEmail] = useState(null);
@@ -144,4 +144,4 @@ const History = () => {
   );
 };
 
-export default History;
+export default EmailHistory;
