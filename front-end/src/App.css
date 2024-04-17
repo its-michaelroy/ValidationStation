@@ -1,24 +1,102 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+:root {
+  --primary-color: #fdfdfd; /* Off-white */
+  --secondary-color: #333333; /* Charcoal */
+  --accent-color: #a3bffa; /* Soft Blue */
+  --background-color: #bfc2c7; /* Off-white fdfdfd/eae0e0*/
+  --text-color: #333333; /* Charcoal */
+}
+
+/* This and setting below apply to the footer div in app.jsx */
+.site-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  flex: 1;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+/* All images */
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: darken(var(--accent-color), 10%);
+} */
+
+button {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  border: lawngreen;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: darken(var(--accent-color), 10%);
+}
+
+.navbar {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
   text-align: center;
 }
 
-.logo {
+/* .footer {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  text-align: center;
+  padding: 10px 0;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+} */
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-}
-.logo:hover {
+} */
+/* .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
-}
+} */
 
-@keyframes logo-spin {
+/* @keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
@@ -31,12 +109,12 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
+} */
+/*
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
-}
+} */

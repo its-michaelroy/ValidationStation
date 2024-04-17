@@ -69,6 +69,8 @@ const PhoneHistory = () => {
 
   return (
     <>
+      <br />
+      <br />
       <h1>Phone History</h1>
       <Table striped bordered hover>
         <thead>

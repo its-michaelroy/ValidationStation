@@ -10,22 +10,27 @@ const SignUp = () => {
   const { setUser } = useOutletContext();
 
   // TODO: Refactor into utilities.js
-  const signupUser = async(e) => {
+  const signupUser = async (e) => {
     e.preventDefault();
-    const response = await api.post("users/register/", { email: emailInput, password: passwordInput})
+    const response = await api.post("users/register/", {
+      email: emailInput,
+      password: passwordInput,
+    });
     if (response.status === 201) {
-        console.log('successfuly signed up, user info', response.data);
-        const { token, user } = response.data;
-        // save auth token so it can be used
-        localStorage.setItem("token", token)
-        api.defaults.headers.common["Authorization"] = `Token ${token}`
-        // set user info for the app
-        setUser({ email: emailInput, user })
+      console.log("successfuly signed up, user info", response.data);
+      const { token, user } = response.data;
+      // save auth token so it can be used
+      localStorage.setItem("token", token);
+      api.defaults.headers.common["Authorization"] = `Token ${token}`;
+      // set user info for the app
+      setUser({ email: emailInput, user });
     }
   };
 
   return (
     <>
+      <br />
+      <br />
       <h2>Signup</h2>
       <Form onSubmit={signupUser}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -44,7 +49,9 @@ const SignUp = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             onChange={(e) => setPasswordInput(e.target.value)}
-          type="password" placeholder="Password" />
+            type="password"
+            placeholder="Password"
+          />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

@@ -4,6 +4,8 @@ import "../index.css";
 const Error404Page = () => {
   return (
     <>
+      <br />
+      <br />
       <h1>404 Page Not Found - Are You Lost?</h1>
       <div
         style={{
@@ -13,7 +15,7 @@ const Error404Page = () => {
           alignItems: "center",
         }}
       >
-        <img src={errorImg} style={{ height: "99vh", width: "99vw" }} />
+        <img src={errorImg} style={{ height: "100vh", width: "100vw" }} />
       </div>
     </>
   );

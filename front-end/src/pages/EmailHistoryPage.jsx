@@ -67,6 +67,8 @@ const EmailHistory = () => {
 
   return (
     <>
+      <br />
+      <br />
       <h1>Email History</h1>
       <Table striped bordered hover>
         <thead>

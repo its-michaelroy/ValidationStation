@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Footer from "./components/Footer";
-import "./index.css";
 // import reactLogo from './assets/wizard.ico'
 // import viteLogo from '/vite.svg'
 import {
@@ -54,9 +53,13 @@ function App() {
 
   return (
     <>
-      <NavBar user={user} setUser={setUser} />
-      <Outlet context={{ user, setUser }} />
-      <Footer />
+      <div className="site-container">
+        <NavBar user={user} setUser={setUser} />
+        <div className="content-wrap">
+          <Outlet context={{ user, setUser }} />
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }

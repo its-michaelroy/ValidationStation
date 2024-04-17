@@ -118,6 +118,8 @@ const MainPage = () => {
 
   return (
     <>
+      <br />
+      <br />
       <h1>Main ValidationStation Page</h1>
       <br />
       <div>

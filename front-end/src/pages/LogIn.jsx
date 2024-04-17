@@ -9,15 +9,17 @@ const LogIn = () => {
   const [passwordInput, setPasswordInput] = useState("");
   const { setUser } = useOutletContext();
 
-  const handleLogin = async(e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const user = await userLogin(emailInput, passwordInput);
     setUser(user);
     console.log(user);
-  }
+  };
 
   return (
     <>
+      <br />
+      <br />
       <h2>Login</h2>
       <Form onSubmit={handleLogin}>
         <Form.Group className="mb-3" controlId="formBasicEmail">

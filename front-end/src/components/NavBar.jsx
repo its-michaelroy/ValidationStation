@@ -4,6 +4,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
+import Wizard from "../assets/DB-wizard.png";
 import { userLogout } from "../utilities";
 
 // if user exists we are logged in nio
@@ -18,6 +19,14 @@ function NavBar({ user, setUser }) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
+        <img
+          src={Wizard}
+          width="50"
+          height="50"
+          className="d-inline-block align-top"
+          alt="Wizard Logo"
+        />
+        {"  "}
         <Navbar.Brand as={Link} to="/">
           Home {user ? user.email : ""}
         </Navbar.Brand>
