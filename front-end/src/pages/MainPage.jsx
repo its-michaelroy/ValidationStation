@@ -100,20 +100,16 @@ const MainPage = () => {
         // const responseData = JSON(response.data)
         console.log("phone details:", response.data);
         setPhoneDetails(response.data);
-        fetchPhoneIconInfo(
-          response.data.is_valid,
-          response.data.isKnownSpammerDomain
-        );
+        fetchPhoneIconInfo(response.data.is_valid);
       }
     } catch (error) {
       console.log("error fetching phone:", error);
     }
   };
 
-  const fetchPhoneIconInfo = async (isValid, isKnownSpammerDomain) => {
+  const fetchPhoneIconInfo = async (isValid) => {
     try {
-      const endpoint =
-        isValid && !isKnownSpammerDomain ? "icons/isValid/" : "icons/notValid/";
+      const endpoint = isValid ? "icons/isValid/" : "icons/notValid/";
       const iconResponse = await api.get(endpoint);
       if (iconResponse.status === 200) {
         setIconPhone(iconResponse.data);
@@ -145,7 +141,7 @@ const MainPage = () => {
                     : "input-valid"
                   : ""
               }
-              placeholder="Enter email"
+              placeholder="Enter email (IE: myemail@address.com)"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -193,12 +189,12 @@ const MainPage = () => {
               type="phone"
               className={
                 phoneDetails
-                  ? !phoneDetails.is_valid || phoneDetails.isKnownSpammerDomain
+                  ? !phoneDetails.is_valid
                     ? "input-invalid"
                     : "input-valid"
                   : ""
               }
-              placeholder="Enter phone number"
+              placeholder="Enter phone number (IE: 123-456-7890)"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -226,9 +222,7 @@ const MainPage = () => {
         {phoneDetails && (
           <div
             className={`mt-3 alert ${
-              !phoneDetails.is_valid || phoneDetails.isKnownSpammerDomain
-                ? "alert-red"
-                : "alert-green"
+              !phoneDetails.is_valid ? "alert-red" : "alert-green"
             }`}
             role="alert"
           >

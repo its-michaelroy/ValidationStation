@@ -1,32 +1,18 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import Footer from "./components/Footer";
-// import reactLogo from './assets/wizard.ico'
-// import viteLogo from '/vite.svg'
 import {
   Outlet,
   useLoaderData,
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import "./App.css";
+import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
-
-// import MainPage from './pages/MainPage'
-// import { api } from './utilities'
 
 function App() {
   const [user, setUser] = useState(useLoaderData());
   const navigate = useNavigate();
   const location = useLocation();
-
-  // const testConnection = async() => {
-  //   const response = await api.get("test/")
-  //   console.log(response)
-  // }
-
-  // useEffect(() => {
-  //   testConnection()
-  // }, [])
 
   useEffect(() => {
     let nullUserUrls = ["/login/", "/register/"]; // should redirect to homepage if logged in

@@ -42,15 +42,6 @@ img {
   margin-right: auto;
 }
 
-/* a {
-  color: var(--accent-color);
-  text-decoration: none;
-}
-
-a:hover {
-  color: darken(var(--accent-color), 10%);
-} */
-
 button {
   background-color: var(--accent-color);
   border: none;
@@ -61,13 +52,6 @@ button {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s;
-  /* background-color: var(--accent-color);
-  color: var(--primary-color);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px; */
 }
 
 button:hover {
@@ -80,16 +64,6 @@ button:hover {
   padding: 10px 20px;
   text-align: center;
 }
-
-/* .footer {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  text-align: center;
-  padding: 10px 0;
-  position: sticky;
-  bottom: 0;
-  width: 100%;
-} */
 
 #root {
   max-width: 1280px;
@@ -130,51 +104,3 @@ button:hover {
   font-size: 1.2rem;
   color: var(--text-color);
 }
-
-/* .homepage h1 {
-  color: var(
-    --secondary-color
-  ); /* Using the secondary color for the headline */
-/* margin-bottom: 16px; Spacing below the headline */
-/* } */
-
-/* .homepage p {
-  color: var(--secondary-color); /* Slightly darker text for the paragraph */
-/*font-size: 18px; /* Slightly larger font size for readability */
-/*} */
-
-/* .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-} */
-/* .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-} */
-
-/* @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-} */
-/*
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-} */
