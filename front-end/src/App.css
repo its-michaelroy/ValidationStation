@@ -6,6 +6,14 @@
   --text-color: #333333; /* Charcoal */
 }
 
+/* navbar div */
+.nav-link-hover:hover {
+  background-color: #0d6efd; /* Bootstrap primary blue */
+  border-radius: 15px;
+  color: #fdfdfd; /* Off-white */
+  transition: color 0.3s;
+}
+
 /* This and setting below apply to the footer div in app.jsx */
 .site-container {
   display: flex;
@@ -45,16 +53,25 @@ a:hover {
 
 button {
   background-color: var(--accent-color);
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #d82e2e;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+  /* background-color: var(--accent-color);
   color: var(--primary-color);
-  border: lawngreen;
+  border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 16px; */
 }
 
 button:hover {
-  background-color: darken(var(--accent-color), 10%);
+  background-color: darken(var(--accent-color), 15%);
 }
 
 .navbar {
@@ -82,6 +99,49 @@ button:hover {
   flex-direction: column;
   min-height: 100vh;
 }
+
+/* Specific styles for the HomePage */
+.homepage {
+  height: 100vh;
+  background: url("./front-end/src/assets/main.jpg") no-repeat center
+    center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homepage-message {
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+}
+
+.homepage-message h1 {
+  font-size: 2.5rem;
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.homepage-message p {
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+/* .homepage h1 {
+  color: var(
+    --secondary-color
+  ); /* Using the secondary color for the headline */
+/* margin-bottom: 16px; Spacing below the headline */
+/* } */
+
+/* .homepage p {
+  color: var(--secondary-color); /* Slightly darker text for the paragraph */
+/*font-size: 18px; /* Slightly larger font size for readability */
+/*} */
 
 /* .logo {
   height: 6em;

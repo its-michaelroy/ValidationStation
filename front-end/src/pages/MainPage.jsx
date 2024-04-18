@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import "../index.css";
 import { api } from "../utilities";
 
+// State hooks for managing of email, phone validation, details and icon state
 const MainPage = () => {
   const [email, setEmail] = useState("");
   const [submit, setSubmit] = useState(false);
@@ -12,9 +13,11 @@ const MainPage = () => {
 
   const [phone, setPhone] = useState("");
   const [submitPhone, setSubmitPhone] = useState(false);
+  const [countryCode, setCountryCode] = useState("");
   const [phoneDetails, setPhoneDetails] = useState(null);
   const [iconPhone, setIconPhone] = useState(null);
 
+  // handles em=ail form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmit(false);
@@ -34,6 +37,7 @@ const MainPage = () => {
     }
   };
 
+  // Fetch details of email after validation
   const fetchEmailDetails = async (identifier) => {
     try {
       const response = await api.get(`email/single_record/${identifier}`); // get single record
@@ -51,6 +55,7 @@ const MainPage = () => {
     }
   };
 
+  // Fetch icon for email validation based upon spam and validity
   const fetchIconInfo = async (isSpam, isValid) => {
     try {
       const endpoint =
@@ -68,11 +73,12 @@ const MainPage = () => {
   };
 
   // PHONE VALIDATION BELOW
+  // handles phone form submission
   const handlePhoneSubmit = async (e) => {
     e.preventDefault();
     setSubmitPhone(false);
     try {
-      const newphone = { phone_number: phone, countryCode: "us" };
+      const newphone = { phone_number: phone, countryCode: countryCode };
       console.log("phone", newphone); //("email/", newemail);
       const response = await api.post("phone/", newphone);
       if (response.status === 201) {
@@ -191,6 +197,15 @@ const MainPage = () => {
               placeholder="Enter phone number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicCountryCode">
+            <Form.Label>Country Code</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter country code (IE: US, CA, BR, etc.)"
+              value={countryCode}
+              onChange={(e) => setCountryCode(e.target.value)}
             />
           </Form.Group>
           <Button variant="primary" type="submit">

@@ -3,29 +3,31 @@ import { Table } from "react-bootstrap";
 import "../index.css";
 import { api } from "../utilities";
 
+// Declare state vars to hold whitelisted emails and phone numbers
 const Whitelist = () => {
   const [whitelistEmail, setWhitelistEmail] = useState([]);
   const [whitelistPhone, setWhitelistPhone] = useState([]);
 
+  // Fetch whitelisted emails and phone numbers on page load
   useEffect(() => {
     fetchWhitelistEmail();
     fetchWhitelistPhone();
   }, []);
 
-  //api/v1/email/blacklist/
+  // Load whitelisted emails
   const fetchWhitelistEmail = async () => {
     try {
-      const response = await api.get("email/whitelist/");
+      const response = await api.get("email/whitelist/"); //api/v1/email/blacklist/
       setWhitelistEmail(response.data);
     } catch (error) {
       console.log("Failed to fetch whitelisted emails", error);
     }
   };
 
-  //api/v1/phone/blacklist/
+  // Load whitelisted phone numbers
   const fetchWhitelistPhone = async () => {
     try {
-      const response = await api.get("phone/whitelist/");
+      const response = await api.get("phone/whitelist/"); //api/v1/phone/blacklist/
       setWhitelistPhone(response.data);
     } catch (error) {
       console.log("Failed to fetch whitelisted numbers", error);
@@ -48,14 +50,18 @@ const Whitelist = () => {
             </tr>
           </thead>
           <tbody>
-            {whitelistEmail.map((email) => (
-              <tr key={email.id}>
-                <td>{email.email_address}</td>
-                <td>{email.is_valid.toString()}</td>
-                <td>{email.isKnownSpammerDomain.toString()}</td>
-                <td>{email.isMailServerDefined.toString()}</td>
-              </tr>
-            ))}
+            {whitelistEmail.map(
+              (
+                email //Map over whitelisted emails and render each row
+              ) => (
+                <tr key={email.id}>
+                  <td>{email.email_address}</td>
+                  <td>{email.is_valid.toString()}</td>
+                  <td>{email.isKnownSpammerDomain.toString()}</td>
+                  <td>{email.isMailServerDefined.toString()}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </div>
@@ -74,15 +80,19 @@ const Whitelist = () => {
             </tr>
           </thead>
           <tbody>
-            {whitelistPhone.map((phone) => (
-              <tr key={phone.id}>
-                <td>{phone.phone_number}</td>
-                <td>{phone.is_valid.toString()}</td>
-                <td>{phone.location}</td>
-                <td>{phone.country_name}</td>
-                <td>{phone.countryFlagEmoji}</td>
-              </tr>
-            ))}
+            {whitelistPhone.map(
+              (
+                phone //Map over whitelisted phone numbers and render each row
+              ) => (
+                <tr key={phone.id}>
+                  <td>{phone.phone_number}</td>
+                  <td>{phone.is_valid.toString()}</td>
+                  <td>{phone.location}</td>
+                  <td>{phone.country_name}</td>
+                  <td>{phone.countryFlagEmoji}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </div>

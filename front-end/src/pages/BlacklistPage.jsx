@@ -4,28 +4,30 @@ import "../index.css";
 import { api } from "../utilities";
 
 const Blacklist = () => {
+  // Declare state vars to hold blacklisted emails and phone numbers
   const [blacklistEmail, setBlacklistEmail] = useState([]);
   const [blacklistPhone, setBlacklistPhone] = useState([]);
 
+  // Fetch blacklisted emails and phone numbers on page load
   useEffect(() => {
     fetchBlacklistEmail();
     fetchBlacklistPhone();
   }, []);
 
-  //api/v1/email/blacklist/
+  //load blacklisted emails
   const fetchBlacklistEmail = async () => {
     try {
-      const response = await api.get("email/blacklist/");
+      const response = await api.get("email/blacklist/"); //api/v1/email/blacklist/
       setBlacklistEmail(response.data);
     } catch (error) {
       console.log("Failed to fetch blacklisted emails", error);
     }
   };
 
-  //api/v1/phone/blacklist/
+  //load blacklisted phone numbers
   const fetchBlacklistPhone = async () => {
     try {
-      const response = await api.get("phone/blacklist/");
+      const response = await api.get("phone/blacklist/"); //api/v1/phone/blacklist/
       setBlacklistPhone(response.data);
     } catch (error) {
       console.log("Failed to fetch blacklisted numbers", error);
@@ -48,14 +50,18 @@ const Blacklist = () => {
             </tr>
           </thead>
           <tbody>
-            {blacklistEmail.map((email) => (
-              <tr key={email.id}>
-                <td>{email.email_address}</td>
-                <td>{email.is_valid.toString()}</td>
-                <td>{email.isKnownSpammerDomain.toString()}</td>
-                <td>{email.isMailServerDefined.toString()}</td>
-              </tr>
-            ))}
+            {blacklistEmail.map(
+              (
+                email //Map over blacklisted emails and render each row
+              ) => (
+                <tr key={email.id}>
+                  <td>{email.email_address}</td>
+                  <td>{email.is_valid.toString()}</td>
+                  <td>{email.isKnownSpammerDomain.toString()}</td>
+                  <td>{email.isMailServerDefined.toString()}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </div>
@@ -74,15 +80,19 @@ const Blacklist = () => {
             </tr>
           </thead>
           <tbody>
-            {blacklistPhone.map((phone) => (
-              <tr key={phone.id}>
-                <td>{phone.phone_number}</td>
-                <td>{phone.is_valid.toString()}</td>
-                <td>{phone.location}</td>
-                <td>{phone.country_name}</td>
-                <td>{phone.countryFlagEmoji}</td>
-              </tr>
-            ))}
+            {blacklistPhone.map(
+              (
+                phone //Map over blacklisted phone numbers and render each row
+              ) => (
+                <tr key={phone.id}>
+                  <td>{phone.phone_number}</td>
+                  <td>{phone.is_valid.toString()}</td>
+                  <td>{phone.location}</td>
+                  <td>{phone.country_name}</td>
+                  <td>{phone.countryFlagEmoji}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </div>
