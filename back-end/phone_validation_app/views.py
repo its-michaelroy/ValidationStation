@@ -11,9 +11,6 @@ from rest_framework.status import (
     HTTP_201_CREATED,
     HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST,
-    HTTP_401_UNAUTHORIZED,
-    HTTP_403_FORBIDDEN,
-    HTTP_404_NOT_FOUND,
     )
 from validation_proj.settings import env
 import json
@@ -32,8 +29,6 @@ class PhoneValidation(TokenReq):
             countryCode = body['countryCode']
             print(number, countryCode)
             API_KEY = env.get('API_KEY')
-            #make sure the number is in the correct format
-            # adjusted_number = number[0] + number[1] + number[2]+"+" + number[3] + number[4] + number[5]+ "-" + number[6] + number[7] + number[8] + number[9]
 
             #Construct request to the API
             endpoint = f"https://api-bdc.net/data/phone-number-validate?number={number}&countryCode={countryCode}&key={API_KEY}"
@@ -64,17 +59,16 @@ class PhoneValidation(TokenReq):
                     countryCode=countryCode,
                     localityLanguage=data.get('localityLanguage', 'en'),
                     is_valid=data.get('isValid', False),
-                    location=data.get('location', 'This needs fixed!'),
+                    location=data.get('location', 'N/A'),
                     lineType=data.get('lineType', 'unknown'),
                     currency_name=data['country']['currency'].get('name', ''),
                     countryFlagEmoji=data['country'].get('countryFlagEmoji', ''),
-                    country_name=data['country'].get('name', ''),
-                    isKnownSpammerDomain=data.get('isKnownSpammerDomain', False)
+                    country_name=data['country'].get('name', '')
                 )
                 new_phone.full_clean()
                 new_phone.save()
                 data['user'] = request.user.id
-                return Response({'message':'Phone info validated and saved', 'phone': new_phone.phone_number}, status=HTTP_201_CREATED)
+                return Response({'message':'Phone info validated and saved', 'phone': new_phone.phone_number, 'LineType': new_phone.lineType}, status=HTTP_201_CREATED)
             else:
                 return Response({'error':'Phone info not validated', 'phone': number}, status=HTTP_400_BAD_REQUEST)
         except ValidationError as e:
@@ -102,8 +96,7 @@ class A_phone_record(TokenReq):
                 'lineType': phone.lineType,
                 'currency_name': phone.currency_name,
                 'countryFlagEmoji': phone.countryFlagEmoji,
-                'country_name': phone.country_name,
-                'isKnownSpammerDomain': phone.isKnownSpammerDomain
+                'country_name': phone.country_name
             }, status=HTTP_200_OK)
 
         phone = get_object_or_404(Phone, phone_number=format_phone_number)
@@ -116,8 +109,7 @@ class A_phone_record(TokenReq):
             'lineType': phone.lineType,
             'currency_name': phone.currency_name,
             'countryFlagEmoji': phone.countryFlagEmoji,
-            'country_name': phone.country_name,
-            'isKnownSpammerDomain': phone.isKnownSpammerDomain
+            'country_name': phone.country_name
         }, status=HTTP_200_OK)
 
     def delete(self, request, identifier):
@@ -162,8 +154,7 @@ class A_phone_record(TokenReq):
                     'lineType': phone.lineType,
                     'currency_name': phone.currency_name,
                     'countryFlagEmoji': phone.countryFlagEmoji,
-                    'country_name': phone.country_name,
-                    'isKnownSpammerDomain': phone.isKnownSpammerDomain
+                    'country_name': phone.country_name
                 }, status=HTTP_200_OK)
             except ValidationError as e:
                 return Response(e, status=HTTP_400_BAD_REQUEST)
@@ -184,8 +175,7 @@ class A_phone_record(TokenReq):
                 'lineType': phone.lineType,
                 'currency_name': phone.currency_name,
                 'countryFlagEmoji': phone.countryFlagEmoji,
-                'country_name': phone.country_name,
-                'isKnownSpammerDomain': phone.isKnownSpammerDomain
+                'country_name': phone.country_name
             }, status=HTTP_200_OK)
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)

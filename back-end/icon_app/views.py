@@ -26,9 +26,7 @@ class Icon_isValid(TokenReq):
         name = "smile"
         endpoint = f"https://api.thenounproject.com/v2/icon?query={name}&limit=1"
         response = requests.get(endpoint, auth=auth)
-        # data_copy = request.data.copy()
-        # print('data_copy >', data_copy)
-        # icon = data.get()
+
         if response.json().get('icons'):
             icon_url = response.json().get('icons')[0].get("thumbnail_url")
             return Response(icon_url, status=HTTP_200_OK)

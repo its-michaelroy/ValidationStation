@@ -19,10 +19,12 @@ from rest_framework.exceptions import NotFound, PermissionDenied
 
 
 # Create your views here.
+# Base request class for token authentication & user to be authenticated
 class TokenReq(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+#View handles user info, updating user info, and deleting user
 class Info(TokenReq):
     def get(self, request):
         try:
@@ -31,6 +33,7 @@ class Info(TokenReq):
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
+    # Update user info
     def put(self, request):
         try:
             a_user = request.user
@@ -48,6 +51,7 @@ class Info(TokenReq):
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
+    # Delete user
     def delete(self, request):
         email_to_delete = request.data.get('email')
         if not request.user.is_superuser:
@@ -67,13 +71,8 @@ class Info(TokenReq):
         except Exception as ex:
             print(f"Unexpected error: {ex}")
             return Response({'error': 'An unexpected error occurred while deleting the user.'})
-        # try:
-        #     a_user = request.user
-        #     a_user.delete()
-        #     return Response('User deleted', status=HTTP_204_NO_CONTENT)
-        # except ValidationError as e:
-        #     return Response(e, status=HTTP_400_BAD_REQUEST)
 
+# Register a new user
 class Register(APIView):
     def post(self, request):
         data = request.data.copy()
@@ -90,6 +89,7 @@ class Register(APIView):
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
+# Log in a user
 class Log_in(APIView):
     def post(self, request):
         data = request.data.copy()
@@ -101,6 +101,7 @@ class Log_in(APIView):
             return Response({'user': user.username, 'token':token.key}, status=HTTP_200_OK)
         return Response('Invalid user', status=HTTP_400_BAD_REQUEST)
 
+# Log out a user
 class Log_out(TokenReq):
     def post(self, request):
         try:
@@ -110,6 +111,7 @@ class Log_out(TokenReq):
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
+# Create a superuser
 class MASTER_USER(APIView):
     def post(self, request):
         # if not request.user.is_authenticated or not request.user.is_superuser:
