@@ -18,6 +18,7 @@ class Phone(models.Model):
     currency_name = models.CharField(max_length=20, default='USD')
     countryFlagEmoji = models.CharField(max_length=10, default='🇺🇸')
     country_name = models.CharField(max_length=30)
+    isKnownSpammerDomain = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.phone_number} ({self.country_name})'

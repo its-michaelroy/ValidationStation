@@ -100,16 +100,20 @@ const MainPage = () => {
         // const responseData = JSON(response.data)
         console.log("phone details:", response.data);
         setPhoneDetails(response.data);
-        fetchPhoneIconInfo(response.data.is_valid);
+        fetchPhoneIconInfo(
+          response.data.is_valid,
+          response.data.isKnownSpammerDomain
+        );
       }
     } catch (error) {
       console.log("error fetching phone:", error);
     }
   };
 
-  const fetchPhoneIconInfo = async (isValid) => {
+  const fetchPhoneIconInfo = async (isValid, isKnownSpammerDomain) => {
     try {
-      const endpoint = isValid ? "icons/isValid/" : "icons/notValid/";
+      const endpoint =
+        isValid && !isKnownSpammerDomain ? "icons/isValid/" : "icons/notValid/";
       const iconResponse = await api.get(endpoint);
       if (iconResponse.status === 200) {
         setIconPhone(iconResponse.data);

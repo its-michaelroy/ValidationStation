@@ -68,7 +68,8 @@ class PhoneValidation(TokenReq):
                     lineType=data.get('lineType', 'unknown'),
                     currency_name=data['country']['currency'].get('name', ''),
                     countryFlagEmoji=data['country'].get('countryFlagEmoji', ''),
-                    country_name=data['country'].get('name', '')
+                    country_name=data['country'].get('name', ''),
+                    isKnownSpammerDomain=data.get('isKnownSpammerDomain', False)
                 )
                 new_phone.full_clean()
                 new_phone.save()
@@ -101,7 +102,8 @@ class A_phone_record(TokenReq):
                 'lineType': phone.lineType,
                 'currency_name': phone.currency_name,
                 'countryFlagEmoji': phone.countryFlagEmoji,
-                'country_name': phone.country_name
+                'country_name': phone.country_name,
+                'isKnownSpammerDomain': phone.isKnownSpammerDomain
             }, status=HTTP_200_OK)
 
         phone = get_object_or_404(Phone, phone_number=format_phone_number)
@@ -114,7 +116,8 @@ class A_phone_record(TokenReq):
             'lineType': phone.lineType,
             'currency_name': phone.currency_name,
             'countryFlagEmoji': phone.countryFlagEmoji,
-            'country_name': phone.country_name
+            'country_name': phone.country_name,
+            'isKnownSpammerDomain': phone.isKnownSpammerDomain
         }, status=HTTP_200_OK)
 
     def delete(self, request, identifier):
@@ -159,7 +162,8 @@ class A_phone_record(TokenReq):
                     'lineType': phone.lineType,
                     'currency_name': phone.currency_name,
                     'countryFlagEmoji': phone.countryFlagEmoji,
-                    'country_name': phone.country_name
+                    'country_name': phone.country_name,
+                    'isKnownSpammerDomain': phone.isKnownSpammerDomain
                 }, status=HTTP_200_OK)
             except ValidationError as e:
                 return Response(e, status=HTTP_400_BAD_REQUEST)
@@ -180,7 +184,8 @@ class A_phone_record(TokenReq):
                 'lineType': phone.lineType,
                 'currency_name': phone.currency_name,
                 'countryFlagEmoji': phone.countryFlagEmoji,
-                'country_name': phone.country_name
+                'country_name': phone.country_name,
+                'isKnownSpammerDomain': phone.isKnownSpammerDomain
             }, status=HTTP_200_OK)
         except ValidationError as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
