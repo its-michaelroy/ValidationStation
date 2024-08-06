@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import dotenv_values
+from dotenv import load_dotenv
+load_dotenv()  # Ensure this is at the very top
+
 
 env = dotenv_values(".env")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -96,7 +99,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'validation_proj.wsgi.application'
-
+print("Database Name:", os.getenv('DB_NAME'))
+print("Database User:", os.getenv('DB_USER'))
+print("Database Password:", os.getenv('DB_PASSWORD'))
+print("Database Host:", os.getenv('DB_HOST'))
+print("Database Port:", os.getenv('DB_PORT'))
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -104,7 +111,9 @@ WSGI_APPLICATION = 'validation_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'validation_db',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
     }
 }
 
